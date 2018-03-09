@@ -16,9 +16,11 @@ int main()
 	                    NULL, 0, NULL, 0, NULL, 0,
                         NULL, 0, NULL, 0, NULL, 0);
     
+/*
     MelderFile fp;
     str32cpy(fp->path, U"/tmp/out.aiff");
     MelderFile file = MelderFile_create(fp); 
     Sound_saveAsAudioFile(res.get(), file, Melder_AIFF, 24);
     return 0;
+*/
 }
