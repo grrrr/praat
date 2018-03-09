@@ -61,9 +61,11 @@
 #include "abcio.h"
 #include "melder.h"
 
+#ifndef NOFLAC
 //#include "flac_FLAC_stream_encoder.h"
 extern "C" int  FLAC__stream_encoder_finish (FLAC__StreamEncoder *);
 extern "C" void FLAC__stream_encoder_delete (FLAC__StreamEncoder *);
+#endif
 
 #if defined (macintosh)
 	#include <sys/stat.h>
@@ -900,12 +902,15 @@ void MelderFile_rewind (MelderFile me) {
 }
 
 static void _MelderFile_close (MelderFile me, bool mayThrow) {
+#ifndef NOFLAC
 	if (my outputEncoding == kMelder_textOutputEncoding_FLAC) {
 		if (my flacEncoder) {
 			FLAC__stream_encoder_finish (my flacEncoder);   // This already calls fclose! BUG: we cannot get any error messages out.
 			FLAC__stream_encoder_delete (my flacEncoder);
 		}
-	} else if (my filePointer) {
+	} else 
+#endif
+	if (my filePointer) {
 		if (mayThrow) {
 			Melder_fclose (me, my filePointer);
 		} else {
@@ -916,7 +921,9 @@ static void _MelderFile_close (MelderFile me, bool mayThrow) {
 	my filePointer = nullptr;
 	my openForWriting = my openForReading = false;
 	my indent = 0;
+#ifndef NOFLAC
 	my flacEncoder = nullptr;
+#endif
 }
 void MelderFile_close (MelderFile me) {
 	_MelderFile_close (me, true);

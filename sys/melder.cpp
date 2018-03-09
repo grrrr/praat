@@ -106,6 +106,7 @@ static struct {
 	void (*playReverse) ();
 	int (*publishPlayed) ();
 }
+
 	theMelder = {
 		defaultHelp, defaultSearch,
 		defaultProgress, defaultMonitor,

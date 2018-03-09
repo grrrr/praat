@@ -60,14 +60,6 @@ integer Sampled_getWindowSamples (Sampled me, double xmin, double xmax, integer 
 	return *ixmax - *ixmin + 1;
 }
 
-void Sampled_init (Sampled me, double xmin, double xmax, integer nx, double dx, double x1) {
-	my xmin = xmin;
-	my xmax = xmax;
-	my nx = nx;
-	my dx = dx;
-	my x1 = x1;
-}
-
 void Sampled_shortTermAnalysis (Sampled me, double windowDuration, double timeStep, integer *numberOfFrames, double *firstTime) {
 	Melder_assert (windowDuration > 0.0);
 	Melder_assert (timeStep > 0.0);
@@ -291,26 +283,6 @@ static void Sampled_getSumAndDefinitionRange
 	if (return_definitionRange) *return_definitionRange = (real) definitionRange;
 }
 
-double Sampled_getMean (Sampled me, double xmin, double xmax, integer ilevel, int unit, bool interpolate) {
-	double sum, definitionRange;
-	Sampled_getSumAndDefinitionRange (me, xmin, xmax, ilevel, unit, interpolate, & sum, & definitionRange);
-	return definitionRange <= 0.0 ? undefined : sum / definitionRange;
-}
-
-double Sampled_getMean_standardUnit (Sampled me, double xmin, double xmax, integer ilevel, int averagingUnit, bool interpolate) {
-	return Function_convertSpecialToStandardUnit (me, Sampled_getMean (me, xmin, xmax, ilevel, averagingUnit, interpolate), ilevel, averagingUnit);
-}
-
-double Sampled_getIntegral (Sampled me, double xmin, double xmax, integer ilevel, int unit, bool interpolate) {
-	double sum, definitionRange;
-	Sampled_getSumAndDefinitionRange (me, xmin, xmax, ilevel, unit, interpolate, & sum, & definitionRange);
-	return sum * my dx;
-}
-
-double Sampled_getIntegral_standardUnit (Sampled me, double xmin, double xmax, integer ilevel, int averagingUnit, bool interpolate) {
-	return Function_convertSpecialToStandardUnit (me, Sampled_getIntegral (me, xmin, xmax, ilevel, averagingUnit, interpolate), ilevel, averagingUnit);
-}
-
 static void Sampled_getSum2AndDefinitionRange
 	(Sampled me, double xmin, double xmax, integer ilevel, int unit, double mean, bool interpolate, double *return_sum2, double *return_definitionRange)
 {
@@ -472,6 +444,26 @@ static void Sampled_getSum2AndDefinitionRange
 	}
 	if (return_sum2) *return_sum2 = (real) sum2;
 	if (return_definitionRange) *return_definitionRange = (real) definitionRange;
+}
+
+double Sampled_getMean (Sampled me, double xmin, double xmax, integer ilevel, int unit, bool interpolate) {
+	double sum, definitionRange;
+	Sampled_getSumAndDefinitionRange (me, xmin, xmax, ilevel, unit, interpolate, & sum, & definitionRange);
+	return definitionRange <= 0.0 ? undefined : sum / definitionRange;
+}
+
+double Sampled_getMean_standardUnit (Sampled me, double xmin, double xmax, integer ilevel, int averagingUnit, bool interpolate) {
+	return Function_convertSpecialToStandardUnit (me, Sampled_getMean (me, xmin, xmax, ilevel, averagingUnit, interpolate), ilevel, averagingUnit);
+}
+
+double Sampled_getIntegral (Sampled me, double xmin, double xmax, integer ilevel, int unit, bool interpolate) {
+	double sum, definitionRange;
+	Sampled_getSumAndDefinitionRange (me, xmin, xmax, ilevel, unit, interpolate, & sum, & definitionRange);
+	return sum * my dx;
+}
+
+double Sampled_getIntegral_standardUnit (Sampled me, double xmin, double xmax, integer ilevel, int averagingUnit, bool interpolate) {
+	return Function_convertSpecialToStandardUnit (me, Sampled_getIntegral (me, xmin, xmax, ilevel, averagingUnit, interpolate), ilevel, averagingUnit);
 }
 
 double Sampled_getStandardDeviation (Sampled me, double xmin, double xmax, integer ilevel, int unit, bool interpolate) {
@@ -664,6 +656,7 @@ static void Sampled_speckleInside (Sampled me, Graphics g, double xmin, double x
 void Sampled_drawInside (Sampled me, Graphics g, double xmin, double xmax, double ymin, double ymax,
 	bool speckle, integer ilevel, int unit)
 {
+#ifndef NOGRAPHICS
 	try {
 		if (speckle) {
 			Sampled_speckleInside (me, g, xmin, xmax, ymin, ymax, ilevel, unit);
@@ -740,6 +733,7 @@ void Sampled_drawInside (Sampled me, Graphics g, double xmin, double xmax, doubl
 	} catch (MelderError) {
 		Melder_clearError ();
 	}
+#endif
 }
 
 /* End of file Sampled.cpp */

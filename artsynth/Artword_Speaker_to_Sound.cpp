@@ -46,7 +46,9 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 	try {
 		autoSound result = Sound_createSimple (1, artword -> totalTime, fsamp);
 		integer numberOfSamples = result -> nx;
+#ifndef NOGRAPHICS
 		double minTract [1+78], maxTract [1+78];   // for drawing
+#endif
 		double Dt = 1.0 / fsamp / oversampling,
 			rho0 = 1.14,
 			c = 353.0,
@@ -75,11 +77,13 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 		if (iv1 > 0 && iv1 <= M) v1 = Sound_createSimple (1, artword -> totalTime, fsamp); else iv1 = 0;
 		if (iv2 > 0 && iv2 <= M) v2 = Sound_createSimple (1, artword -> totalTime, fsamp); else iv2 = 0;
 		if (iv3 > 0 && iv3 <= M) v3 = Sound_createSimple (1, artword -> totalTime, fsamp); else iv3 = 0;
+#ifndef NOGRAPHICS
 		/* Initialize drawing. */
 		for (int i = 1; i <= 78; i ++) {
 			minTract [i] = 100.0;
 			maxTract [i] = -100.0;
 		}
+#endif
 		totalVolume = 0.0;
 		for (int m = 1; m <= M; m ++) {
 			Delta_Tube t = delta->tube + m;
@@ -105,6 +109,7 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 			double time = (sample - 1) / fsamp;
 			Artword_intoArt (artword, art.get(), time);
 			Art_Speaker_intoDelta (art.get(), speaker, delta.get());
+#ifndef NOGRAPHICS
 			if (sample % MONITOR_SAMPLES == 0 && monitor.graphics()) {   // because we can be in batch
 				Graphics graphics = monitor.graphics();
 				double area [1+78];
@@ -164,6 +169,7 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 				Graphics_endMovieFrame (graphics, 0.0);
 				Melder_monitor ((double) sample / numberOfSamples, U"Articulatory synthesis: ", Melder_half (time), U" seconds");
 			}
+#endif
 			for (int n = 1; n <= oversampling; n ++) {
 				for (int m = 1; m <= M; m ++) {
 					Delta_Tube t = delta -> tube + m;

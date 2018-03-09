@@ -35,9 +35,17 @@ template <typename T, typename... Args>
 	}
 #endif
 
-void Matrix_init
+inline void Matrix_init
 	(Matrix me, double xmin, double xmax, integer nx, double dx, double x1,
-	            double ymin, double ymax, integer ny, double dy, double y1);
+	            double ymin, double ymax, integer ny, double dy, double y1) {
+	Sampled_init (me, xmin, xmax, nx, dx, x1);
+	my ymin = ymin;
+	my ymax = ymax;
+	my ny = ny;
+	my dy = dy;
+	my y1 = y1;
+	my z = NUMmatrix <double> (1, my ny, 1, my nx);
+}
 
 autoMatrix Matrix_create
 	(double xmin, double xmax, integer nx, double dx, double x1,

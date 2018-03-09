@@ -370,6 +370,7 @@ void Vector_scale (Vector me, double scale) {
 void Vector_draw (Vector me, Graphics g, double *pxmin, double *pxmax, double *pymin, double *pymax,
 	double defaultDy, const char32 *method)
 {
+#ifndef NOGRAPHICS
 	bool xreversed = *pxmin > *pxmax, yreversed = *pymin > *pymax;
 	if (xreversed) { double temp = *pxmin; *pxmin = *pxmax; *pxmax = temp; }
 	if (yreversed) { double temp = *pymin; *pymin = *pymax; *pymax = temp; }
@@ -432,6 +433,5 @@ void Vector_draw (Vector me, Graphics g, double *pxmin, double *pxmax, double *p
 			Matrix_columnToX (me, ixmin), Matrix_columnToX (me, ixmax));
 	}
 	Graphics_unsetInner (g);
+#endif
 }
-	
-/* End of file Vector.cpp */

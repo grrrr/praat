@@ -188,6 +188,7 @@ void Art_Speaker_toVocalTract (Art _art, Speaker speaker,
 }
 
 void Art_Speaker_draw (Art art, Speaker speaker, Graphics g) {
+#ifndef NOGRAPHICS
 	double f = speaker -> relativeSize * 1e-3;
 	double intX [1 + 16], intY [1 + 16], extX [1 + 11], extY [1 + 11];
 	double bodyX, bodyY;
@@ -218,9 +219,11 @@ void Art_Speaker_draw (Art art, Speaker speaker, Graphics g) {
 	for (i = 7; i <= 10; i ++)
 		Graphics_line (g, extX [i], extY [i], extX [i + 1], extY [i + 1]);
 	Graphics_resetViewport (g, previous);
+#endif
 }
 
 void Art_Speaker_fillInnerContour (Art art, Speaker speaker, Graphics g) {
+#ifndef NOGRAPHICS
 	double f = speaker -> relativeSize * 1e-3;
 	double intX [1 + 16], intY [1 + 16], extX [1 + 11], extY [1 + 11];
 	double x [1 + 16], y [1 + 16];
@@ -237,6 +240,7 @@ void Art_Speaker_fillInnerContour (Art art, Speaker speaker, Graphics g) {
 	Graphics_fillCircle (g, bodyX, bodyY, 20 * f);
 	Graphics_setGrey (g, 0.0);
 	Graphics_resetViewport (g, previous);
+#endif
 }
 
 static double arcLength (double from, double to) {
@@ -392,6 +396,7 @@ void Art_Speaker_meshVocalTract (Art art, Speaker speaker,
 }
 
 void Art_Speaker_drawMesh (Art art, Speaker speaker, Graphics graphics) {
+#ifndef NOGRAPHICS
 	double xi [40], yi [40], xe [40], ye [40], xmm [40], ymm [40];
 	int closed [40];
 	int i;
@@ -421,6 +426,7 @@ void Art_Speaker_drawMesh (Art art, Speaker speaker, Graphics graphics) {
 	Graphics_setTextAlignment (graphics, Graphics_LEFT, Graphics_HALF);
 	Graphics_text (graphics, 0.0, 0.0, U"O");   // origin
 	Graphics_resetViewport (graphics, previous);
+#endif
 }
 
 /* End of file Art_Speaker.cpp */

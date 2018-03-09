@@ -44,7 +44,13 @@ static inline autonumvec Sampled_getX_numvec (Sampled me) {
 
 integer Sampled_getWindowSamples (Sampled me, double xmin, double xmax, integer *ixmin, integer *ixmax);
 
-void Sampled_init (Sampled me, double xmin, double xmax, integer nx, double dx, double x1);
+inline void Sampled_init (Sampled me, double xmin, double xmax, integer nx, double dx, double x1) {
+	my xmin = xmin;
+	my xmax = xmax;
+	my nx = nx;
+	my dx = dx;
+	my x1 = x1;
+}
 
 void Sampled_shortTermAnalysis (Sampled me, double windowDuration, double timeStep,
 	integer *numberOfFrames, double *firstTime);

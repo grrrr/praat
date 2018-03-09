@@ -25,6 +25,15 @@
 
 typedef struct { double red, green, blue; } Graphics_Colour;
 
+#if GRRRR_LEAN
+struct structGraphics {};
+struct GuiDrawingArea {};
+struct Graphics_Viewport {};
+#define autoGraphics void
+#define GRRRR_IMP {}
+#else
+#define GRRRR_IMP ;
+
 typedef struct { double x1NDC, x2NDC, y1NDC, y2NDC; } Graphics_Viewport;
 
 Thing_declare (GuiDrawingArea);
@@ -139,101 +148,102 @@ Thing_define (Graphics, Thing) {
 	virtual void v_clearWs () { }
 	virtual void v_updateWs () { }
 };
+#endif
 
-autoGraphics Graphics_create (int resolution);
+autoGraphics Graphics_create (int resolution) GRRRR_IMP
 autoGraphics Graphics_create_postscriptjob (MelderFile file, int resolution, kGraphicsPostscript_spots spots,
-	kGraphicsPostscript_paperSize paperSize, kGraphicsPostscript_orientation rotation, double magnification);
+	kGraphicsPostscript_paperSize paperSize, kGraphicsPostscript_orientation rotation, double magnification) GRRRR_IMP
 autoGraphics Graphics_create_epsfile (MelderFile file, int resolution, enum kGraphicsPostscript_spots spots,
-	double xmin, double xmax, double ymin, double ymax, bool includeFonts, bool useSilipaPS);
+	double xmin, double xmax, double ymin, double ymax, bool includeFonts, bool useSilipaPS) GRRRR_IMP
 autoGraphics Graphics_create_pdffile (MelderFile file, int resolution,
-	double x1inches, double x2inches, double y1inches, double y2inches);
+	double x1inches, double x2inches, double y1inches, double y2inches) GRRRR_IMP
 autoGraphics Graphics_create_pdf (void *context, int resolution,
-	double x1inches, double x2inches, double y1inches, double y2inches);
+	double x1inches, double x2inches, double y1inches, double y2inches) GRRRR_IMP
 autoGraphics Graphics_create_pngfile (MelderFile file, int resolution,
-	double x1inches, double x2inches, double y1inches, double y2inches);
-autoGraphics Graphics_create_postscriptprinter (void);
-autoGraphics Graphics_create_screenPrinter (void *display, void *window);
-autoGraphics Graphics_create_screen (void *display, void *window, int resolution);
-autoGraphics Graphics_create_xmdrawingarea (GuiDrawingArea drawingArea);
+	double x1inches, double x2inches, double y1inches, double y2inches) GRRRR_IMP
+autoGraphics Graphics_create_postscriptprinter (void) GRRRR_IMP
+autoGraphics Graphics_create_screenPrinter (void *display, void *window) GRRRR_IMP
+autoGraphics Graphics_create_screen (void *display, void *window, int resolution) GRRRR_IMP
+autoGraphics Graphics_create_xmdrawingarea (GuiDrawingArea drawingArea) GRRRR_IMP
 
 int Graphics_getResolution (Graphics me);
 
-void Graphics_setWsViewport (Graphics me, integer x1DC, integer x2DC, integer y1DC, integer y2DC);
-void Graphics_resetWsViewport (Graphics me, integer x1DC, integer x2DC, integer y1DC, integer y2DC);
-void Graphics_setWsWindow (Graphics me, double x1NDC, double x2NDC, double y1NDC, double y2NDC);
-void Graphics_inqWsViewport (Graphics me, integer *x1DC, integer *x2DC, integer *y1DC, integer *y2DC);
-void Graphics_inqWsWindow (Graphics me, double *x1NDC, double *x2NDC, double *y1NDC, double *y2NDC);
-void Graphics_clearWs (Graphics me);
-void Graphics_flushWs (Graphics me);
-void Graphics_updateWs (Graphics me);
-void Graphics_beginMovieFrame (Graphics me, Graphics_Colour *colour);
-void Graphics_endMovieFrame (Graphics me, double frameDuration);
-void Graphics_DCtoWC (Graphics me, integer xDC, integer yDC, double *xWC, double *yWC);
-void Graphics_WCtoDC (Graphics me, double xWC, double yWC, integer *xDC, integer *yDC);
+void Graphics_setWsViewport (Graphics me, integer x1DC, integer x2DC, integer y1DC, integer y2DC) GRRRR_IMP
+void Graphics_resetWsViewport (Graphics me, integer x1DC, integer x2DC, integer y1DC, integer y2DC) GRRRR_IMP
+void Graphics_setWsWindow (Graphics me, double x1NDC, double x2NDC, double y1NDC, double y2NDC) GRRRR_IMP
+void Graphics_inqWsViewport (Graphics me, integer *x1DC, integer *x2DC, integer *y1DC, integer *y2DC) GRRRR_IMP
+void Graphics_inqWsWindow (Graphics me, double *x1NDC, double *x2NDC, double *y1NDC, double *y2NDC) GRRRR_IMP
+void Graphics_clearWs (Graphics me) GRRRR_IMP
+void Graphics_flushWs (Graphics me) GRRRR_IMP
+void Graphics_updateWs (Graphics me) GRRRR_IMP
+void Graphics_beginMovieFrame (Graphics me, Graphics_Colour *colour) GRRRR_IMP
+void Graphics_endMovieFrame (Graphics me, double frameDuration) GRRRR_IMP
+void Graphics_DCtoWC (Graphics me, integer xDC, integer yDC, double *xWC, double *yWC) GRRRR_IMP
+void Graphics_WCtoDC (Graphics me, double xWC, double yWC, integer *xDC, integer *yDC) GRRRR_IMP
 
-void Graphics_setViewport (Graphics me, double x1NDC, double x2NDC, double y1NDC, double y2NDC);
-Graphics_Viewport Graphics_insetViewport (Graphics me, double x1rel, double x2rel, double y1rel, double y2rel);
-void Graphics_resetViewport (Graphics me, Graphics_Viewport viewport);
-void Graphics_setWindow (Graphics me, double x1, double x2, double y1, double y2);
+void Graphics_setViewport (Graphics me, double x1NDC, double x2NDC, double y1NDC, double y2NDC) GRRRR_IMP
+Graphics_Viewport Graphics_insetViewport (Graphics me, double x1rel, double x2rel, double y1rel, double y2rel) GRRRR_IMP
+void Graphics_resetViewport (Graphics me, Graphics_Viewport viewport) GRRRR_IMP
+void Graphics_setWindow (Graphics me, double x1, double x2, double y1, double y2) GRRRR_IMP
 
-void Graphics_polyline (Graphics me, integer numberOfPoints, double *x, double *y);
-void Graphics_polyline_closed (Graphics me, integer numberOfPoints, double *x, double *y);
-void Graphics_text (Graphics me, double x, double y, Melder_1_ARG);
-void Graphics_text (Graphics me, double x, double y, Melder_2_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_3_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_4_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_5_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_6_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_7_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_8_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_9_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_10_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_11_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_12_OR_13_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_14_OR_15_ARGS);
-void Graphics_text (Graphics me, double x, double y, Melder_16_TO_19_ARGS);
-void Graphics_textRect (Graphics me, double x1, double x2, double y1, double y2, const char32 *text /* cattable */);
-double Graphics_textWidth       (Graphics me, const char32 *text /* cattable */);
-double Graphics_textWidth_ps    (Graphics me, const char32 *text /* cattable */, bool useSilipaPS);
-double Graphics_textWidth_ps_mm (Graphics me, const char32 *text /* cattable */, bool useSilipaPS);
-void Graphics_fillArea (Graphics me, integer numberOfPoints, double *x, double *y);
+void Graphics_polyline (Graphics me, integer numberOfPoints, double *x, double *y) GRRRR_IMP
+void Graphics_polyline_closed (Graphics me, integer numberOfPoints, double *x, double *y) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_1_ARG) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_2_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_3_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_4_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_5_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_6_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_7_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_8_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_9_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_10_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_11_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_12_OR_13_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_14_OR_15_ARGS) GRRRR_IMP
+void Graphics_text (Graphics me, double x, double y, Melder_16_TO_19_ARGS) GRRRR_IMP
+void Graphics_textRect (Graphics me, double x1, double x2, double y1, double y2, const char32 *text /* cattable */) GRRRR_IMP
+double Graphics_textWidth       (Graphics me, const char32 *text /* cattable */) GRRRR_IMP
+double Graphics_textWidth_ps    (Graphics me, const char32 *text /* cattable */, bool useSilipaPS) GRRRR_IMP
+double Graphics_textWidth_ps_mm (Graphics me, const char32 *text /* cattable */, bool useSilipaPS) GRRRR_IMP
+void Graphics_fillArea (Graphics me, integer numberOfPoints, double *x, double *y) GRRRR_IMP
 void Graphics_cellArray (Graphics me, double **z, integer ix1, integer ix2, double x1, double x2,
-	integer iy1, integer iy2, double y1, double y2, double minimum, double maximum);
+	integer iy1, integer iy2, double y1, double y2, double minimum, double maximum) GRRRR_IMP
 void Graphics_cellArray_colour (Graphics me, double_rgbt **z, integer ix1, integer ix2, double x1, double x2,
-	integer iy1, integer iy2, double y1, double y2, double minimum, double maximum);
+	integer iy1, integer iy2, double y1, double y2, double minimum, double maximum) GRRRR_IMP
 void Graphics_cellArray8 (Graphics me, unsigned char **z, integer ix1, integer ix2, double x1, double x2,
-	integer iy1, integer iy2, double y1, double y2, unsigned char minimum, unsigned char maximum);
+	integer iy1, integer iy2, double y1, double y2, unsigned char minimum, unsigned char maximum) GRRRR_IMP
 void Graphics_image (Graphics me, double **z, integer ix1, integer ix2, double x1, double x2,
-	integer iy1, integer iy2, double y1, double y2, double minimum, double maximum);
+	integer iy1, integer iy2, double y1, double y2, double minimum, double maximum) GRRRR_IMP
 void Graphics_image_colour (Graphics me, double_rgbt **z, integer ix1, integer ix2, double x1, double x2,
-	integer iy1, integer iy2, double y1, double y2, double minimum, double maximum);
+	integer iy1, integer iy2, double y1, double y2, double minimum, double maximum) GRRRR_IMP
 void Graphics_image8 (Graphics me, unsigned char **z, integer ix1, integer ix2, double x1, double x2,
-	integer iy1, integer iy2, double y1, double y2, uint8 minimum, uint8 maximum);
+	integer iy1, integer iy2, double y1, double y2, uint8 minimum, uint8 maximum) GRRRR_IMP
 void Graphics_imageFromFile (Graphics me, const char32 *relativeFileName, double x1, double x2, double y1, double y2);
-void Graphics_line (Graphics me, double x1, double y1, double x2, double y2);
-void Graphics_rectangle (Graphics me, double x1, double x2, double y1, double y2);
-void Graphics_fillRectangle (Graphics me, double x1, double x2, double y1, double y2);
-void Graphics_roundedRectangle (Graphics me, double x1, double x2, double y1, double y2, double r_mm);
-void Graphics_fillRoundedRectangle (Graphics me, double x1, double x2, double y1, double y2, double r_mm);
-void Graphics_function (Graphics me, double y [], integer ix1, integer ix2, double x1, double x2);   // y [ix1..ix2]
-void Graphics_function16 (Graphics me, int16_t y [], int stagger, integer ix1, integer ix2, double x1, double x2);   // y [ix1..ix2] or y [ix1*2..ix2*2]
-void Graphics_circle (Graphics me, double x, double y, double r);
-void Graphics_fillCircle (Graphics me, double x, double y, double r);
-void Graphics_circle_mm (Graphics me, double x, double y, double d);
-void Graphics_fillCircle_mm (Graphics me, double x, double y, double d);
-void Graphics_speckle (Graphics me, double x, double y);
-void Graphics_rectangle_mm (Graphics me, double x, double y, double horizontalSide_mm, double verticalSide_mm);
-void Graphics_fillRectangle_mm (Graphics me, double x, double y, double horizontalSide_mm, double verticalSide_mm);
-void Graphics_arc (Graphics me, double x, double y, double r, double fromAngle, double toAngle);
-void Graphics_fillArc (Graphics me, double x, double y, double r, double fromAngle, double toAngle);
-void Graphics_ellipse (Graphics me, double x1, double x2, double y1, double y2);
-void Graphics_fillEllipse (Graphics me, double x1, double x2, double y1, double y2);
-void Graphics_arrow (Graphics me, double x1, double y1, double x2, double y2);
-void Graphics_doubleArrow (Graphics me, double x1, double y1, double x2, double y2);
-void Graphics_arcArrow (Graphics me, double x, double y, double r, double fromAngle, double toAngle, int arrowAtStart, int arrowAtEnd);
-void Graphics_mark (Graphics me, double x, double y, double size_mm, const char32 *markString /* cattable */);
-void Graphics_button (Graphics me, double x1, double x2, double y1, double y2);
-void Graphics_innerRectangle (Graphics me, double x1, double x2, double y1, double y2);
+void Graphics_line (Graphics me, double x1, double y1, double x2, double y2) GRRRR_IMP
+void Graphics_rectangle (Graphics me, double x1, double x2, double y1, double y2) GRRRR_IMP
+void Graphics_fillRectangle (Graphics me, double x1, double x2, double y1, double y2) GRRRR_IMP
+void Graphics_roundedRectangle (Graphics me, double x1, double x2, double y1, double y2, double r_mm) GRRRR_IMP
+void Graphics_fillRoundedRectangle (Graphics me, double x1, double x2, double y1, double y2, double r_mm) GRRRR_IMP
+void Graphics_function (Graphics me, double y [], integer ix1, integer ix2, double x1, double x2) GRRRR_IMP   // y [ix1..ix2]
+void Graphics_function16 (Graphics me, int16_t y [], int stagger, integer ix1, integer ix2, double x1, double x2) GRRRR_IMP   // y [ix1..ix2] or y [ix1*2..ix2*2]
+void Graphics_circle (Graphics me, double x, double y, double r) GRRRR_IMP
+void Graphics_fillCircle (Graphics me, double x, double y, double r) GRRRR_IMP
+void Graphics_circle_mm (Graphics me, double x, double y, double d) GRRRR_IMP
+void Graphics_fillCircle_mm (Graphics me, double x, double y, double d) GRRRR_IMP
+void Graphics_speckle (Graphics me, double x, double y) GRRRR_IMP
+void Graphics_rectangle_mm (Graphics me, double x, double y, double horizontalSide_mm, double verticalSide_mm) GRRRR_IMP
+void Graphics_fillRectangle_mm (Graphics me, double x, double y, double horizontalSide_mm, double verticalSide_mm) GRRRR_IMP
+void Graphics_arc (Graphics me, double x, double y, double r, double fromAngle, double toAngle) GRRRR_IMP
+void Graphics_fillArc (Graphics me, double x, double y, double r, double fromAngle, double toAngle) GRRRR_IMP
+void Graphics_ellipse (Graphics me, double x1, double x2, double y1, double y2) GRRRR_IMP
+void Graphics_fillEllipse (Graphics me, double x1, double x2, double y1, double y2) GRRRR_IMP
+void Graphics_arrow (Graphics me, double x1, double y1, double x2, double y2) GRRRR_IMP
+void Graphics_doubleArrow (Graphics me, double x1, double y1, double x2, double y2) GRRRR_IMP
+void Graphics_arcArrow (Graphics me, double x, double y, double r, double fromAngle, double toAngle, int arrowAtStart, int arrowAtEnd) GRRRR_IMP
+void Graphics_mark (Graphics me, double x, double y, double size_mm, const char32 *markString /* cattable */) GRRRR_IMP
+void Graphics_button (Graphics me, double x1, double x2, double y1, double y2) GRRRR_IMP
+void Graphics_innerRectangle (Graphics me, double x1, double x2, double y1, double y2) GRRRR_IMP
 
 extern Graphics_Colour Graphics_BLACK, Graphics_WHITE, Graphics_RED, Graphics_GREEN, Graphics_BLUE,
 	Graphics_CYAN, Graphics_MAGENTA, Graphics_YELLOW, Graphics_MAROON, Graphics_LIME, Graphics_NAVY, Graphics_TEAL,

@@ -131,6 +131,7 @@ void Artword_intoArt (Artword me, Art art, double time) {
 }
 
 void Artword_draw (Artword me, Graphics g, kArt_muscle muscle, bool garnish) {
+#ifndef NOGRAPHICS
 	int16 numberOfTargets = my data [(int) muscle]. numberOfTargets;
 	if (numberOfTargets > 0) {
 		autoNUMvector <double> x (1, numberOfTargets);
@@ -152,6 +153,7 @@ void Artword_draw (Artword me, Graphics g, kArt_muscle muscle, bool garnish) {
 		Graphics_textTop (g, false, kArt_muscle_getText (muscle));
 		Graphics_textBottom (g, true, U"Time (s)");
 	}
+#endif
 }
 
 /* End of file Artword.cpp */

@@ -477,8 +477,10 @@ int64 Melder_atoi (const char32 *string) noexcept;
 	#define Melder_DIRECTORY_SEPARATOR  '/'
 #endif
 
+#ifndef NOFLAC
 struct FLAC__StreamDecoder;
 struct FLAC__StreamEncoder;
+#endif
 
 #define kMelder_MAXPATH 1023   /* excluding the null byte */
 
@@ -489,7 +491,9 @@ struct structMelderFile {
 	bool openForReading, openForWriting, verbose, requiresCRLF;
 	uint32 outputEncoding;
 	int indent;
+#ifndef NOFLAC
 	struct FLAC__StreamEncoder *flacEncoder;
+#endif
 };
 typedef struct structMelderFile *MelderFile;
 

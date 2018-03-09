@@ -360,6 +360,7 @@ void Eigen_invertEigenvector (Eigen me, integer ivec) {
 }
 
 void Eigen_drawEigenvalues (Eigen me, Graphics g, integer first, integer last, double ymin, double ymax, bool fractionOfTotal, bool cumulative, double size_mm, const char32 *mark, bool garnish) {
+#ifndef NOGRAPHICS
 	double xmin = first, xmax = last, scale = 1.0, sumOfEigenvalues = 0.0;
 
 	if (first < 1) {
@@ -404,9 +405,11 @@ void Eigen_drawEigenvalues (Eigen me, Graphics g, integer first, integer last, d
 		Graphics_marksLeft (g, 2, true, true, false);
 		Graphics_textBottom (g, true, U"Index");
 	}
+#endif
 }
 
 void Eigen_drawEigenvector (Eigen me, Graphics g, integer ivec, integer first, integer last, double ymin, double ymax, bool weigh, double size_mm, const char32 *mark, bool connect, char32 **rowLabels, bool garnish) {
+#ifndef NOGRAPHICS
 	double xmin = first, xmax = last;
 
 	if (ivec < 1 || ivec > my numberOfEigenvalues) {
@@ -448,6 +451,7 @@ void Eigen_drawEigenvector (Eigen me, Graphics g, integer ivec, integer first, i
 			Graphics_textBottom (g, true, U"Element number");
 		}
 	}
+#endif
 }
 
 void Eigens_alignEigenvectors (OrderedOf<structEigen>* me) {
