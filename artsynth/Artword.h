@@ -36,7 +36,7 @@ void Artword_setDefault (Artword me, kArt_muscle muscle);
 		rest unchanged;	
 */
 
-void Artword_setTarget (Artword me, kArt_muscle muscle, double time, double value);
+void Artword_setTarget (Artword me, kArt_muscle muscle, double time, FLOATTYPE value);
 
 double Artword_getTarget (Artword me, kArt_muscle muscle, double time);
 

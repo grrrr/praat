@@ -26,12 +26,12 @@ oo_DEFINE_CLASS (Matrix, SampledXY)
 				U" Going to read ", ny, U" rows"
 				U" of ", nx, U" columns.");
 		if (formatVersion >= 2) {
-			oo_DOUBLE_MATRIX (z, ny, nx)
+			oo_FLOATTYPE_MATRIX (z, ny, nx)
 		} else {
 			oo_FLOAT_MATRIX (z, ny, nx)
 		}
 	#else
-		oo_DOUBLE_MATRIX (z, ny, nx)
+		oo_FLOATTYPE_MATRIX (z, ny, nx)
 	#endif
 
 	#if oo_DECLARING

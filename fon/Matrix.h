@@ -36,20 +36,20 @@ template <typename T, typename... Args>
 #endif
 
 inline void Matrix_init
-	(Matrix me, double xmin, double xmax, integer nx, double dx, double x1,
-	            double ymin, double ymax, integer ny, double dy, double y1) {
+	(Matrix me, FLOATTYPE xmin, FLOATTYPE xmax, integer nx, FLOATTYPE dx, FLOATTYPE x1,
+	            FLOATTYPE ymin, FLOATTYPE ymax, integer ny, FLOATTYPE dy, FLOATTYPE y1) {
 	Sampled_init (me, xmin, xmax, nx, dx, x1);
 	my ymin = ymin;
 	my ymax = ymax;
 	my ny = ny;
 	my dy = dy;
 	my y1 = y1;
-	my z = NUMmatrix <double> (1, my ny, 1, my nx);
+	my z = NUMmatrix <FLOATTYPE> (1, my ny, 1, my nx);
 }
 
 autoMatrix Matrix_create
-	(double xmin, double xmax, integer nx, double dx, double x1,
-	 double ymin, double ymax, integer ny, double dy, double y1);
+	(FLOATTYPE xmin, FLOATTYPE xmax, integer nx, FLOATTYPE dx, FLOATTYPE x1,
+	 FLOATTYPE ymin, FLOATTYPE ymax, integer ny, FLOATTYPE dy, FLOATTYPE y1);
 /*
 	Function:
 		return a new empty Matrix.

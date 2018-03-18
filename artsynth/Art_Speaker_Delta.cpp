@@ -21,8 +21,8 @@
 
 void Art_Speaker_intoDelta (Art art, Speaker speaker, Delta delta)
 {
-	double f = speaker -> relativeSize * 1e-3;
-	double xe [30], ye [30], xi [30], yi [30], xmm [30], ymm [30], dx, dy;
+	FLOATTYPE f = speaker -> relativeSize * 1e-3;
+	FLOATTYPE xe [30], ye [30], xi [30], yi [30], xmm [30], ymm [30], dx, dy;
 	int closed [40];
 	int itube;
 

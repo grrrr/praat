@@ -24,13 +24,13 @@
 autoVocalTract Art_Speaker_to_VocalTract (Art art, Speaker speaker) {
 	autoDelta delta = Speaker_to_Delta (speaker);
 	Art_Speaker_intoDelta (art, speaker, delta.get());
-	double area [300];
-	constexpr double sectionLength = 0.001;   // one millimetre
+	FLOATTYPE area [300];
+	constexpr FLOATTYPE sectionLength = 0.001;   // one millimetre
 	integer numberOfSections = 0;
 	for (integer isection = 1; isection <= 27; isection ++) {
 		Delta_Tube tube = delta -> tube + 37 + isection;
 		integer numberOfConstantSections = Melder_iround (tube -> Dxeq / sectionLength);
-		double constantArea = tube -> Dyeq * tube -> Dzeq;
+		FLOATTYPE constantArea = tube -> Dyeq * tube -> Dzeq;
 		for (integer jsection = 1; jsection <= numberOfConstantSections; jsection ++)
 			area [++ numberOfSections] = constantArea;
 	}

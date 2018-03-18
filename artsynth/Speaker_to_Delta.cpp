@@ -22,8 +22,8 @@
 #define FIRST_TUBE  7
 
 autoDelta Speaker_to_Delta (Speaker me) {
-	double f = my relativeSize * 1e-3;   // we shall use millimetres and grams
-	double xe [30], ye [30], xi [30], yi [30], xmm [30], ymm [30], dx, dy;
+	FLOATTYPE f = my relativeSize * 1e-3;   // we shall use millimetres and grams
+	FLOATTYPE xe [30], ye [30], xi [30], yi [30], xmm [30], ymm [30], dx, dy;
 	int closed [40];
 	autoDelta thee = Delta_create (89);
 	Melder_assert (my cord.numberOfMasses == 1 || my cord.numberOfMasses == 2 || my cord.numberOfMasses == 10);
@@ -69,7 +69,7 @@ autoDelta Speaker_to_Delta (Speaker me) {
 	}
 
 	if (SMOOTH_LUNGS) {
-		struct { integer itube; double Dy, Dz, parallel; } data [] = {
+		struct { integer itube; FLOATTYPE Dy, Dz, parallel; } data [] = {
 			{  7, 120.0, 240.0, 5000.0 }, {  8, 120.0, 240.0, 5000.0 }, {  9, 120.0, 240.0, 5000.0 },
 			{ 10, 120.0, 240.0, 5000.0 }, { 11, 120.0, 240.0, 5000.0 }, { 12, 120.0, 240.0, 5000.0 },
 			{ 13, 120.0, 240.0, 2500.0 }, { 14, 120.0, 240.0, 1250.0 }, { 15, 120.0, 240.0,  640.0 },

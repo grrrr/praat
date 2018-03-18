@@ -1,6 +1,8 @@
 # intermediate build products for Windows and Linux
 *.o
 *.a
+*.E
+*.dSYM
 
 # the project for MacOSX
 *.xcodeproj/

@@ -21,8 +21,8 @@
 #include "Graphics.h"
 
 void Art_Speaker_toVocalTract (Art art, Speaker speaker,
-	double intX [], double intY [], double extX [], double extY [],
-	double *bodyX, double *bodyY);
+	FLOATTYPE intX [], FLOATTYPE intY [], FLOATTYPE extX [], FLOATTYPE extY [],
+	FLOATTYPE *bodyX, FLOATTYPE *bodyY);
 /*
 	Function:
 		compute key places of the supralaryngeal vocal tract.
@@ -44,8 +44,8 @@ void Art_Speaker_draw (Art art, Speaker speaker, Graphics g);
 void Art_Speaker_fillInnerContour (Art art, Speaker speaker, Graphics g);
 
 void Art_Speaker_meshVocalTract (Art art, Speaker speaker,
-	double xi [], double yi [], double xe [], double ye [],
-	double xmm [], double ymm [], int closed []);
+	FLOATTYPE xi [], FLOATTYPE yi [], FLOATTYPE xe [], FLOATTYPE ye [],
+	FLOATTYPE xmm [], FLOATTYPE ymm [], int closed []);
 
 void Art_Speaker_drawMesh (Art art, Speaker speaker, Graphics g);
 

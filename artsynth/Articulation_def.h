@@ -20,7 +20,7 @@
 #define ooSTRUCT Art
 oo_DEFINE_CLASS (Art, Daata)
 
-	oo_DOUBLE_SET (art, kArt_muscle)
+	oo_FLOATTYPE_SET (art, kArt_muscle)
 
 oo_END_CLASS (Art)
 #undef ooSTRUCT

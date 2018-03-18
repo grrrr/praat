@@ -38,7 +38,7 @@
 #define B91  0
 
 autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
-	double fsamp, int oversampling,
+	FLOATTYPE fsamp, int oversampling,
 	autoSound *out_w1, int iw1, autoSound *out_w2, int iw2, autoSound *out_w3, int iw3,
 	autoSound *out_p1, int ip1, autoSound *out_p2, int ip2, autoSound *out_p3, int ip3,
 	autoSound *out_v1, int iv1, autoSound *out_v2, int iv2, autoSound *out_v3, int iv3)
@@ -49,7 +49,7 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 #ifndef NOGRAPHICS
 		double minTract [1+78], maxTract [1+78];   // for drawing
 #endif
-		double Dt = 1.0 / fsamp / oversampling,
+		FLOATTYPE Dt = 1.0 / fsamp / oversampling,
 			rho0 = 1.14,
 			c = 353.0,
 			onebyc2 = 1.0 / (c * c),
@@ -60,7 +60,7 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 			twoc2Dt = 2.0 * c * c * Dt,
 			onebytworho0 = 1.0 / (2.0 * rho0),
 			Dtbytworho0 = Dt / (2.0 * rho0);
-		double tension, rrad, onebygrad, totalVolume;
+		FLOATTYPE tension, rrad, onebygrad, totalVolume;
 		autoArt art = Art_create ();
 		autoDelta delta = Speaker_to_Delta (speaker);
 		autoMelderMonitor monitor (U"Articulatory synthesis");
@@ -106,7 +106,7 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 		}
 		//Melder_casual (U"Starting volume: ", totalVolume * 1000, U" litres.");
 		for (integer sample = 1; sample <= numberOfSamples; sample ++) {
-			double time = (sample - 1) / fsamp;
+			FLOATTYPE time = (sample - 1) / fsamp;
 			Artword_intoArt (artword, art.get(), time);
 			Art_Speaker_intoDelta (art.get(), speaker, delta.get());
 #ifndef NOGRAPHICS
@@ -195,8 +195,8 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 					t->DeltaP = t->e / t->V - rho0c2;   // 5.117
 					t->v = t->p / (rho0 + onebyc2 * t->DeltaP);   // 5.118
 					{
-						double dDy = t->Dyeq - t->Dy;
-						double cubic = t->k3 * dDy * dDy;
+						FLOATTYPE dDy = t->Dyeq - t->Dy;
+						FLOATTYPE cubic = t->k3 * dDy * dDy;
 						Delta_Tube l1 = t->left1, l2 = t->left2, r1 = t->right1, r2 = t->right2;
 						tension = dDy * (t->k1 + cubic);
 						t->B = 2.0 * t->Brel * sqrt (t->mass * (t->k1 + 3.0 * cubic));
@@ -211,7 +211,7 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 					}
 					if (t->Dy < t->dy) {
 						if (t->Dy >= - t->dy) {
-							double dDy = t->dy - t->Dy, dDy2 = dDy * dDy;
+							FLOATTYPE dDy = t->dy - t->Dy, dDy2 = dDy * dDy;
 							tension += dDy2 / (4.0 * t->dy) * (t->s1 + 0.5 * t->s3 * dDy2);
 							t->B += 2.0 * dDy / (2.0 * t->dy) *
 								sqrt (t->mass * (t->s1 + t->s3 * dDy2));
@@ -235,14 +235,16 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 					t->Ahalf = 0.5 * (t->A + t->Anew);   // 5.120
 					t->Dxhalf = 0.5 * (t->Dxnew + t->Dx);   // 5.121
 					t->Vnew = t->Anew * t->Dxnew;   // 5.128
-					{ double oneByDyav = t->Dz / t->A;
-					/*t->R = 12.0 * 1.86e-5 * t->parallel * t->parallel * oneByDyav * oneByDyav;*/
-					if (t->Dy < 0.0)
-						t->R = 12.0 * 1.86e-5 / (Dymin * Dymin + t->dy * t->dy);
-					else
-						t->R = 12.0 * 1.86e-5 * t->parallel * t->parallel /
-							((t->Dy + Dymin) * (t->Dy + Dymin) + t->dy * t->dy);
-					t->R += 0.3 * t->parallel * oneByDyav;   /* 5.23 */ }
+					{ 
+                        FLOATTYPE oneByDyav = t->Dz / t->A;
+    					/*t->R = 12.0 * 1.86e-5 * t->parallel * t->parallel * oneByDyav * oneByDyav;*/
+    					if (t->Dy < 0.0)
+    						t->R = 12.0 * 1.86e-5 / (Dymin * Dymin + t->dy * t->dy);
+    					else
+    						t->R = 12.0 * 1.86e-5 * t->parallel * t->parallel /
+    							((t->Dy + Dymin) * (t->Dy + Dymin) + t->dy * t->dy);
+    					t->R += 0.3 * t->parallel * oneByDyav;   /* 5.23 */ 
+                    }
 					t->r = (1.0 + t->R * Dt / rho0) * t->Dxhalf / t->Anew;   // 5.122
 					t->ehalf = t->e + halfc2Dt * (t->Jleft - t->Jright);   // 5.123
 					t->phalf = (t->p + halfDt * (t->Qleft - t->Qright) / t->Dx) / (1.0 + Dtbytworho0 * t->R);   // 5.123
@@ -369,7 +371,7 @@ autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
 				/* Save some results. */
 
 				if (n == (oversampling + 1) / 2) {
-					double out = 0.0;
+					FLOATTYPE out = 0.0;
 					for (int m = 1; m <= M; m ++) {
 						Delta_Tube t = delta->tube + m;
 						out += rho0 * t->Dx * t->Dz * t->dDydt * Dt * 1000.0;   // radiation of wall movement, 5.140

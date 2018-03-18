@@ -37,7 +37,7 @@ enums_begin (kArt_muscle, 0)
 	enums_add (kArt_muscle, 14, SPHINCTER, U"Sphincter")   // constriction of pharynx
 
 	enums_add (kArt_muscle, 15, HYOGLOSSUS, U"Hyoglossus")   // down movement of tongue body
-	enums_add (kArt_muscle, 16, STYLOGLOSSUS, U"Styloglossus")   // up movement of tongue body
+	enums_add (kArt_muscle, 16, STYLOGLOSSUS, U"Styloglossus")   // forward movement of tongue body
 	enums_add (kArt_muscle, 17, GENIOGLOSSUS, U"Genioglossus")   // forward movement of tongue body
 
 	enums_add (kArt_muscle, 18, UPPER_TONGUE, U"UpperTongue")   // up curling of the tongue tip

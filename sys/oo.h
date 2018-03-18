@@ -71,7 +71,7 @@
 //#define oo_UINT_ARRAY(x,cap,n)  oo_ARRAY (unsigned int, u16, x, cap, n)
 //#define oo_UINTEGER_ARRAY(x,cap,n)  oo_ARRAY (uinteger, u32, x, cap, n)
 //#define oo_BOOL_ARRAY(x,cap,n)  oo_ARRAY (unsigned char, u8, x, cap, n)
-//#define oo_FLOAT_ARRAY(x,cap,n)  oo_ARRAY (double, r32, x, cap, n)
+#define oo_FLOAT_ARRAY(x,cap,n)  oo_ARRAY (double, r32, x, cap, n)
 #define oo_DOUBLE_ARRAY(x,cap,n)  oo_ARRAY (double, r64, x, cap, n)
 //#define oo_COMPLEX_ARRAY(x,cap,n)  oo_ARRAY (dcomplex, c128, x, cap, n)
 #define oo_POINTER_ARRAY(x,cap,n)  oo_ARRAY (void *, dummy, x, cap, n)
@@ -86,7 +86,7 @@
 //#define oo_UINT_SET(x,setType)  oo_SET (unsigned int, u16, x, setType)
 //#define oo_UINTEGER_SET(x,setType)  oo_SET (uinteger, u32, x, setType)
 //#define oo_BOOL_SET(x,setType)  oo_SET (unsigned char, u8, x, setType)
-//#define oo_FLOAT_SET(x,setType)  oo_SET (double, r32, x, setType)
+#define oo_FLOAT_SET(x,setType)  oo_SET (double, r32, x, setType)
 #define oo_DOUBLE_SET(x,setType)  oo_SET (double, r64, x, setType)
 //#define oo_COMPLEX_SET(x,setType)  oo_SET (dcomplex, c128, x, setType)
 #define oo_POINTER_SET(x,setType)  oo_SET (void *, dummy, x, setType)
@@ -114,7 +114,7 @@
 //#define oo_UINT_MATRIX_FROM(x,row1,row2,col1,col2)  oo_MATRIX (unsigned int, u16, x, row1, row2, col1, col2)
 //#define oo_UINTEGER_MATRIX_FROM(x,row1,row2,col1,col2)  oo_MATRIX (uinteger, u32, x, row1, row2, col1, col2)
 //#define oo_BOOL_MATRIX_FROM(x,row1,row2,col1,col2)  oo_MATRIX (unsigned char, u8, x, row1, row2, col1, col2)
-//#define oo_FLOAT_MATRIX_FROM(x,row1,row2,col1,col2)  oo_MATRIX (double, r32, x, row1, row2, col1, col2)
+#define oo_FLOAT_MATRIX_FROM(x,row1,row2,col1,col2)  oo_MATRIX (double, r32, x, row1, row2, col1, col2)
 #define oo_DOUBLE_MATRIX_FROM(x,row1,row2,col1,col2)  oo_MATRIX (double, r64, x, row1, row2, col1, col2)
 //#define oo_COMPLEX_MATRIX_FROM(x,row1,row2,col1,col2)  oo_MATRIX (dcomplex, c128, x, row1, row2, col1, col2)
 #define oo_POINTER_MATRIX_FROM(x,row1,row2,col1,col2)  oo_MATRIX (void *, dummy, x, row1, row2, col1, col2)
@@ -144,6 +144,30 @@
 #define oo_DOUBLE_MATRIX(x,nrow,ncol)  oo_MATRIX (double, r64, x, 1, nrow, 1, ncol)
 //#define oo_COMPLEX_MATRIX(x,nrow,ncol)  oo_MATRIX (dcomplex, c128, x, 1, nrow, 1, ncol)
 #define oo_POINTER_MATRIX(x,nrow,ncol)  oo_MATRIX (void *, dummy, x, 1, nrow, 1, ncol)
+
+
+#define double_IDENT 1
+#define float_IDENT 0
+
+#define GLUE(x,y) x ## y
+
+#if GLUE(FLOATTYPE,_IDENT)
+#define oo_FLOATTYPE oo_DOUBLE
+#define oo_FLOATTYPE_ARRAY oo_DOUBLE_ARRAY
+#define oo_FLOATTYPE_VECTOR oo_DOUBLE_VECTOR
+#define oo_FLOATTYPE_MATRIX oo_DOUBLE_MATRIX
+#define oo_FLOATTYPE_SET oo_DOUBLE_SET
+#define oo_FLOATTYPE_VECTOR_FROM oo_DOUBLE_VECTOR_FROM
+#define oo_FLOATTYPE_MATRIX_FROM oo_DOUBLE_MATRIX_FROM
+#else
+#define oo_FLOATTYPE oo_FLOAT
+#define oo_FLOATTYPE_ARRAY oo_FLOAT_ARRAY
+#define oo_FLOATTYPE_VECTOR oo_FLOAT_VECTOR
+#define oo_FLOATTYPE_MATRIX oo_FLOAT_MATRIX
+#define oo_FLOATTYPE_SET oo_FLOAT_SET
+#define oo_FLOATTYPE_VECTOR_FROM oo_FLOAT_VECTOR_FROM
+#define oo_FLOATTYPE_MATRIX_FROM oo_FLOAT_MATRIX_FROM
+#endif
 
 
 /*** Enumerated types. ***/

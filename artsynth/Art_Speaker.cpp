@@ -21,19 +21,19 @@
 #define DLIP  5e-3
 
 void Art_Speaker_toVocalTract (Art _art, Speaker speaker,
-	double intX [], double intY [], double extX [], double extY [],
-	double *bodyX, double *bodyY)
+	FLOATTYPE intX [], FLOATTYPE intY [], FLOATTYPE extX [], FLOATTYPE extY [],
+	FLOATTYPE *bodyX, FLOATTYPE *bodyY)
 {
-	double *art = _art -> art;
-	double f = speaker -> relativeSize * 1e-3;
-	struct { double x, y, da; } jaw;
-	struct { double dx, dy; } hyoid;
-	struct { double x, y, r, radius; } body;
-	struct { double x, y, r, a; } teeth;
-	struct { double a; } blade;
-	struct { double x, y, a; } tip;
-	struct { double dx, dy; } lowerLip, upperLip;
-	double HBody_x, HBody_y, HC, Sp, p, a, b;
+	FLOATTYPE *art = _art -> art;
+	FLOATTYPE f = speaker -> relativeSize * 1e-3;
+	struct { FLOATTYPE x, y, da; } jaw;
+	struct { FLOATTYPE dx, dy; } hyoid;
+	struct { FLOATTYPE x, y, r, radius; } body;
+	struct { FLOATTYPE x, y, r, a; } teeth;
+	struct { FLOATTYPE a; } blade;
+	struct { FLOATTYPE x, y, a; } tip;
+	struct { FLOATTYPE dx, dy; } lowerLip, upperLip;
+	FLOATTYPE HBody_x, HBody_y, HC, Sp, p, a, b;
 
 	/* Determine the position of the hyoid bone (Mermelstein's H).	*/
 	/* The rest position is a characteristic of the speaker.		*/
@@ -243,8 +243,9 @@ void Art_Speaker_fillInnerContour (Art art, Speaker speaker, Graphics g) {
 #endif
 }
 
-static double arcLength (double from, double to) {
-	double result = to - from;
+template <class T>
+static T arcLength (T from, T to) {
+	T result = to - from;
 	while (result > 0.0) result -= 2 * NUMpi;
 	while (result < 0.0) result += 2 * NUMpi;
 	return result;
@@ -253,14 +254,15 @@ static double arcLength (double from, double to) {
 static int Art_Speaker_meshCount = 27;
 static double bodyX, bodyY, bodyRadius;
 
-static double toLine (double x, double y, const double intX [], const double intY [], int i) {
+template <class T>
+static T toLine (T x, T y, const T intX [], const T intY [], int i) {
 	int nearby;
 	if (i == 6) {
-		double a7 = atan2 (intY [7] - bodyY, intX [7] - bodyX);
-		double a6 = atan2 (intY [6] - bodyY, intX [6] - bodyX);
-		double a = atan2 (y - bodyY, x - bodyX);
-		double da6 = arcLength (a7, a6);
-		double da = arcLength (a7, a);
+		T a7 = atan2 (intY [7] - bodyY, intX [7] - bodyX);
+		T a6 = atan2 (intY [6] - bodyY, intX [6] - bodyX);
+		T a = atan2 (y - bodyY, x - bodyX);
+		T da6 = arcLength (a7, a6);
+		T da = arcLength (a7, a);
 		if (da <= da6)
 			return fabs (sqrt ((bodyX - x) * (bodyX - x) + (bodyY - y) * (bodyY - y)) - bodyRadius);
 		else
@@ -272,17 +274,18 @@ static double toLine (double x, double y, const double intX [], const double int
 				(y - intY [i + 1]) * (intY [i] - intY [i + 1]) < 0) {
 		nearby = i + 1;
 	} else {
-		double boundaryDistance =
+		T boundaryDistance =
 			sqrt ((intX [i + 1] - intX [i]) * (intX [i + 1] - intX [i]) +
 					(intY [i + 1] - intY [i]) * (intY [i + 1] - intY [i]));
-		double outerProduct = (intX [i] - x) * (intY [i + 1] - intY [i]) - (intY [i] - y) * (intX [i + 1] - intX [i]);
+		T outerProduct = (intX [i] - x) * (intY [i + 1] - intY [i]) - (intY [i] - y) * (intX [i + 1] - intX [i]);
 		return fabs (outerProduct) / boundaryDistance;
 	}
 	return sqrt ((intX [nearby] - x) * (intX [nearby] - x) + (intY [nearby] - y) * (intY [nearby] - y));
 }
 
-static int inside (double x, double y,
-	const double intX [], const double intY [])
+template <class T>
+static int inside (T x, T y,
+	const T intX [], const T intY [])
 {
 	int i, up = 0;
 	for (i = 1; i <= 16 - 1; i ++)
@@ -296,12 +299,12 @@ static int inside (double x, double y,
 }
 
 void Art_Speaker_meshVocalTract (Art art, Speaker speaker,
-	double xi [], double yi [], double xe [], double ye [],
-	double xmm [], double ymm [], int closed [])
+	FLOATTYPE xi [], FLOATTYPE yi [], FLOATTYPE xe [], FLOATTYPE ye [],
+	FLOATTYPE xmm [], FLOATTYPE ymm [], int closed [])
 {
-	double f = speaker -> relativeSize * 1e-3;
-	double intX [1 + 16], intY [1 + 16], extX [1 + 11], extY [1 + 11], d_angle;
-	double xm [40], ym [40];
+	FLOATTYPE f = speaker -> relativeSize * 1e-3;
+	FLOATTYPE intX [1 + 16], intY [1 + 16], extX [1 + 11], extY [1 + 11], d_angle;
+	FLOATTYPE xm [40], ym [40];
 	int i;
 
 	Art_Speaker_toVocalTract (art, speaker, intX, intY, extX, extY, & bodyX, & bodyY);
@@ -335,7 +338,7 @@ void Art_Speaker_meshVocalTract (Art art, Speaker speaker,
 	ye [13] = 0.1 * extY [4] + 0.9 * extY [5];
 	d_angle = (atan2 (ye [13], xe [13]) - 0.5 * NUMpi) / 6;   /* Eq. 5.47 */
 	for (i = 14; i <= 18; i ++) {
-		double a = 0.5 * NUMpi + (19 - i) * d_angle;
+		FLOATTYPE a = 0.5 * NUMpi + (19 - i) * d_angle;
 		xe [i] = speaker -> palate.radius * cos (a);
 		ye [i] = speaker -> palate.radius * sin (a);
 	}
@@ -359,10 +362,10 @@ void Art_Speaker_meshVocalTract (Art art, Speaker speaker,
 	ye [26] = extY [10];
 	ye [27] = 0.5 * (extY [10] + extY [11]);
 	for (i = 1; i <= 27; i ++) {   /* Every mesh point. */
-		double minimum = 100000;
+		FLOATTYPE minimum = 100000;
 		int j;
 		for (j = 1; j <= 15 - 1; j ++) {   /* Every internal segment. */
-			double d = toLine (xe [i], ye [i], intX, intY, j);
+			FLOATTYPE d = toLine (xe [i], ye [i], intX, intY, j);
 			if (d < minimum) minimum = d;
 		}
 		if ((closed [i] = inside (xe [i], ye [i], intX, intY)) != 0)
@@ -374,7 +377,7 @@ void Art_Speaker_meshVocalTract (Art art, Speaker speaker,
 			xi [i] = xe [i] + minimum;
 			yi [i] = ye [i];
 		} else {   /* Radial line pieces, centre = centre of palate arc. */
-			double angle = atan2 (ye [i], xe [i]);
+			FLOATTYPE angle = atan2 (ye [i], xe [i]);
 			xi [i] = xe [i] - minimum * cos (angle);
 			yi [i] = ye [i] - minimum * sin (angle);
 		}

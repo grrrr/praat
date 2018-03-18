@@ -22,7 +22,7 @@ oo_DEFINE_STRUCT (ArtwordData)
 
 	oo_INT16 (numberOfTargets)
 	oo_DOUBLE_VECTOR (targets, numberOfTargets)
-	oo_DOUBLE_VECTOR (times, numberOfTargets)
+	oo_FLOATTYPE_VECTOR (times, numberOfTargets)
 
 	#if oo_DECLARING
 		oo_INT16 (_iTarget)

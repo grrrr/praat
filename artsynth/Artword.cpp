@@ -49,10 +49,10 @@ autoArtword Artword_create (double totalTime) {
 
 void Artword_setDefault (Artword me, kArt_muscle muscle) {
 	ArtwordData f = & my data [(int) muscle];
-	NUMvector_free <double> (f -> times, 1);
-	NUMvector_free <double> (f -> targets, 1);
-	f -> times = NUMvector <double> (1, 2);
-	f -> targets = NUMvector <double> (1, 2);
+	NUMvector_free <FLOATTYPE> (f -> times, 1);
+	NUMvector_free <FLOATTYPE> (f -> targets, 1);
+	f -> times = NUMvector <FLOATTYPE> (1, 2);
+	f -> targets = NUMvector <FLOATTYPE> (1, 2);
 	f -> numberOfTargets = 2;
 	f -> times [1] = 0.0;
 	f -> targets [1] = 0.0;
@@ -61,7 +61,7 @@ void Artword_setDefault (Artword me, kArt_muscle muscle) {
 	f -> _iTarget = 1;
 }
 
-void Artword_setTarget (Artword me, kArt_muscle muscle, double time, double target) {
+void Artword_setTarget (Artword me, kArt_muscle muscle, double time, FLOATTYPE target) {
 	try {
 		Melder_assert ((int) muscle >= 1);
 		Melder_assert ((int) muscle <= (int) kArt_muscle::MAX);
@@ -78,9 +78,9 @@ void Artword_setTarget (Artword me, kArt_muscle muscle, double time, double targ
 			if (f -> numberOfTargets == INT16_MAX)
 				Melder_throw (U"An Artword cannot have more than ", INT16_MAX, U" targets.");
 			integer numberOfTargets = f -> numberOfTargets;
-			NUMvector_insert <double> (& f -> times, 1, & numberOfTargets, insertionPosition);
+			NUMvector_insert <FLOATTYPE> (& f -> times, 1, & numberOfTargets, insertionPosition);
 			numberOfTargets = f -> numberOfTargets;
-			NUMvector_insert <double> (& f -> targets, 1, & numberOfTargets, insertionPosition);
+			NUMvector_insert <FLOATTYPE> (& f -> targets, 1, & numberOfTargets, insertionPosition);
 			f -> numberOfTargets ++;
 		}
 		f -> targets [insertionPosition] = target;
@@ -92,7 +92,8 @@ void Artword_setTarget (Artword me, kArt_muscle muscle, double time, double targ
 
 double Artword_getTarget (Artword me, kArt_muscle muscle, double time) {
 	ArtwordData f = & my data [(int) muscle];
-	double *times = f -> times, *targets = f -> targets;
+	double *times = f -> times;
+    FLOATTYPE *targets = f -> targets;
 	int16 targetNumber = f -> _iTarget;
 	if (! targetNumber) targetNumber = 1;
 	while (time > times [targetNumber + 1] && targetNumber < f -> numberOfTargets - 1)

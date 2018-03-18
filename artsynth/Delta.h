@@ -33,23 +33,23 @@ struct structDelta_Tube
 
 	/* Controlled by articulation: quasistatic. */
 
-	double Dxeq, Dyeq, Dzeq;
-	double mass, k1, k3, Brel, s1, s3, dy;
-	double k1left1, k1left2, k1right1, k1right2;   // linear coupling factors
-	double k3left1, k3left2, k3right1, k3right2;   // cubic coupling factors
+	FLOATTYPE Dxeq, Dyeq, Dzeq;
+	FLOATTYPE mass, k1, k3, Brel, s1, s3, dy;
+	FLOATTYPE k1left1, k1left2, k1right1, k1right2;   // linear coupling factors
+	FLOATTYPE k3left1, k3left2, k3right1, k3right2;   // cubic coupling factors
 
 	/* Dynamic. */
 
-	double Jhalf, Jleft, Jleftnew, Jright, Jrightnew;
-	double Qhalf, Qleft, Qleftnew, Qright, Qrightnew;
-	double Dx, Dxnew, dDxdt, dDxdtnew, Dxhalf;
-	double Dy, Dynew, dDydt, dDydtnew;
-	double Dz;
-	double A, Ahalf, Anew, V, Vnew;
-	double e, ehalf, eleft, eleftnew, eright, erightnew, ehalfold;
-	double p, phalf, pleft, pleftnew, pright, prightnew;
-	double Kleft, Kleftnew, Kright, Krightnew, Pturbright, Pturbrightnew;
-	double B, r, R, DeltaP, v;
+	FLOATTYPE Jhalf, Jleft, Jleftnew, Jright, Jrightnew;
+	FLOATTYPE Qhalf, Qleft, Qleftnew, Qright, Qrightnew;
+	FLOATTYPE Dx, Dxnew, dDxdt, dDxdtnew, Dxhalf;
+	FLOATTYPE Dy, Dynew, dDydt, dDydtnew;
+	FLOATTYPE Dz;
+	FLOATTYPE A, Ahalf, Anew, V, Vnew;
+	FLOATTYPE e, ehalf, eleft, eleftnew, eright, erightnew, ehalfold;
+	FLOATTYPE p, phalf, pleft, pleftnew, pright, prightnew;
+	FLOATTYPE Kleft, Kleftnew, Kright, Krightnew, Pturbright, Pturbrightnew;
+	FLOATTYPE B, r, R, DeltaP, v;
 };
 
 Thing_define (Delta, Thing) {

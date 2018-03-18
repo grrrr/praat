@@ -21,7 +21,7 @@
 oo_DEFINE_STRUCT (Speaker_CordDimensions)
 
 	oo_INT16 (numberOfMasses)
-	oo_DOUBLE (length)
+	oo_FLOATTYPE (length)
 
 oo_END_STRUCT (Speaker_CordDimensions)
 #undef ooSTRUCT
@@ -30,9 +30,9 @@ oo_END_STRUCT (Speaker_CordDimensions)
 #define ooSTRUCT Speaker_CordSpring
 oo_DEFINE_STRUCT (Speaker_CordSpring)
 
-	oo_DOUBLE (thickness)
-	oo_DOUBLE (mass)
-	oo_DOUBLE (k1)
+	oo_FLOATTYPE (thickness)
+	oo_FLOATTYPE (mass)
+	oo_FLOATTYPE (k1)
 
 oo_END_STRUCT (Speaker_CordSpring)
 #undef ooSTRUCT
@@ -41,9 +41,9 @@ oo_END_STRUCT (Speaker_CordSpring)
 #define ooSTRUCT Speaker_GlottalShunt
 oo_DEFINE_STRUCT (Speaker_GlottalShunt)
 
-	oo_DOUBLE (Dx)
-	oo_DOUBLE (Dy)
-	oo_DOUBLE (Dz)
+	oo_FLOATTYPE (Dx)
+	oo_FLOATTYPE (Dy)
+	oo_FLOATTYPE (Dz)
 
 oo_END_STRUCT (Speaker_GlottalShunt)
 #undef ooSTRUCT
@@ -52,9 +52,9 @@ oo_END_STRUCT (Speaker_GlottalShunt)
 #define ooSTRUCT Speaker_Velum
 oo_DEFINE_STRUCT (Speaker_Velum)   // V
 
-	oo_DOUBLE (x)
-	oo_DOUBLE (y)
-	oo_DOUBLE (a)
+	oo_FLOATTYPE (x)
+	oo_FLOATTYPE (y)
+	oo_FLOATTYPE (a)
 
 oo_END_STRUCT (Speaker_Velum)
 #undef ooSTRUCT
@@ -63,7 +63,7 @@ oo_END_STRUCT (Speaker_Velum)
 #define ooSTRUCT Speaker_Palate
 oo_DEFINE_STRUCT (Speaker_Palate)   // OM
 
-	oo_DOUBLE (radius)
+	oo_FLOATTYPE (radius)
 
 oo_END_STRUCT (Speaker_Palate)
 #undef ooSTRUCT
@@ -72,7 +72,7 @@ oo_END_STRUCT (Speaker_Palate)
 #define ooSTRUCT Speaker_Tip
 oo_DEFINE_STRUCT (Speaker_Tip)
 
-	oo_DOUBLE (length)
+	oo_FLOATTYPE (length)
 
 oo_END_STRUCT (Speaker_Tip)
 #undef ooSTRUCT
@@ -81,9 +81,9 @@ oo_END_STRUCT (Speaker_Tip)
 #define ooSTRUCT Speaker_Alveoli
 oo_DEFINE_STRUCT (Speaker_Alveoli)
 
-	oo_DOUBLE (x)
-	oo_DOUBLE (y)
-	oo_DOUBLE (a)
+	oo_FLOATTYPE (x)
+	oo_FLOATTYPE (y)
+	oo_FLOATTYPE (a)
 
 oo_END_STRUCT (Speaker_Alveoli)
 #undef ooSTRUCT
@@ -92,9 +92,9 @@ oo_END_STRUCT (Speaker_Alveoli)
 #define ooSTRUCT Speaker_TeethCavity
 oo_DEFINE_STRUCT (Speaker_TeethCavity)
 
-	oo_DOUBLE (dx1)
-	oo_DOUBLE (dx2)
-	oo_DOUBLE (dy)
+	oo_FLOATTYPE (dx1)
+	oo_FLOATTYPE (dx2)
+	oo_FLOATTYPE (dy)
 
 oo_END_STRUCT (Speaker_TeethCavity)
 #undef ooSTRUCT
@@ -103,8 +103,8 @@ oo_END_STRUCT (Speaker_TeethCavity)
 #define ooSTRUCT Speaker_LowerTeeth
 oo_DEFINE_STRUCT (Speaker_LowerTeeth)   // rest position of J
 
-	oo_DOUBLE (r)
-	oo_DOUBLE (a)
+	oo_FLOATTYPE (r)
+	oo_FLOATTYPE (a)
 
 oo_END_STRUCT (Speaker_LowerTeeth)
 #undef ooSTRUCT
@@ -113,8 +113,8 @@ oo_END_STRUCT (Speaker_LowerTeeth)
 #define ooSTRUCT Speaker_UpperTeeth
 oo_DEFINE_STRUCT (Speaker_UpperTeeth)   // U
 
-	oo_DOUBLE (x)
-	oo_DOUBLE (y)
+	oo_FLOATTYPE (x)
+	oo_FLOATTYPE (y)
 
 oo_END_STRUCT (Speaker_UpperTeeth)
 #undef ooSTRUCT
@@ -123,8 +123,8 @@ oo_END_STRUCT (Speaker_UpperTeeth)
 #define ooSTRUCT Speaker_Lip
 oo_DEFINE_STRUCT (Speaker_Lip)
 
-	oo_DOUBLE (dx)
-	oo_DOUBLE (dy)
+	oo_FLOATTYPE (dx)
+	oo_FLOATTYPE (dy)
 
 oo_END_STRUCT (Speaker_Lip)
 #undef ooSTRUCT
@@ -133,9 +133,9 @@ oo_END_STRUCT (Speaker_Lip)
 #define ooSTRUCT Speaker_Nose
 oo_DEFINE_STRUCT (Speaker_Nose)
 
-	oo_DOUBLE (Dx)
-	oo_DOUBLE (Dz)
-	oo_DOUBLE_ARRAY (weq, 14, 14)
+	oo_FLOATTYPE (Dx)
+	oo_FLOATTYPE (Dz)
+	oo_FLOATTYPE_ARRAY (weq, 14, 14)
 
 oo_END_STRUCT (Speaker_Nose)
 #undef ooSTRUCT
@@ -144,7 +144,7 @@ oo_END_STRUCT (Speaker_Nose)
 #define ooSTRUCT Speaker
 oo_DEFINE_CLASS (Speaker, Daata)
 
-	oo_DOUBLE (relativeSize)   // different for female, male, child
+	oo_FLOATTYPE (relativeSize)   // different for female, male, child
 
 	/* In the larynx. */
 
@@ -158,7 +158,7 @@ oo_DEFINE_CLASS (Speaker, Daata)
 	oo_STRUCT (Speaker_Velum, velum)
 	oo_STRUCT (Speaker_Palate, palate)
 	oo_STRUCT (Speaker_Tip, tip)
-	oo_DOUBLE (neutralBodyDistance)
+	oo_FLOATTYPE (neutralBodyDistance)
 	oo_STRUCT (Speaker_Alveoli, alveoli)
 	oo_STRUCT (Speaker_TeethCavity, teethCavity)
 	oo_STRUCT (Speaker_LowerTeeth, lowerTeeth)

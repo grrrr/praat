@@ -42,7 +42,7 @@ Thing_implement (Matrix, SampledXY, 2);
 
 void structMatrix :: v_info () {
 	structDaata :: v_info ();
-	double minimum = 0.0, maximum = 0.0;
+	FLOATTYPE minimum = 0.0, maximum = 0.0;
 	Matrix_getWindowExtrema (this, 1, our nx, 1, our ny, & minimum, & maximum);
 	MelderInfo_writeLine (U"xmin: ", our xmin);
 	MelderInfo_writeLine (U"xmax: ", our xmax);
@@ -112,8 +112,8 @@ double structMatrix :: v_getFunction2 (double x, double y) {
 }
 
 autoMatrix Matrix_create
-	(double xmin, double xmax, integer nx, double dx, double x1,
-	 double ymin, double ymax, integer ny, double dy, double y1)
+	(FLOATTYPE xmin, FLOATTYPE xmax, integer nx, FLOATTYPE dx, FLOATTYPE x1,
+	 FLOATTYPE ymin, FLOATTYPE ymax, integer ny, FLOATTYPE dy, FLOATTYPE y1)
 {
 	try {
 		autoMatrix me = Thing_new (Matrix);

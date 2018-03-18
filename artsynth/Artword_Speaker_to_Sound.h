@@ -21,7 +21,7 @@
 #include "Sound.h"
 
 autoSound Artword_Speaker_to_Sound (Artword artword, Speaker speaker,
-   double samplingFrequency, int oversampling,
+   FLOATTYPE samplingFrequency, int oversampling,
    autoSound *w1, int iw1, autoSound *w2, int iw2, autoSound *w3, int iw3,
    autoSound *p1, int ip1, autoSound *p2, int ip2, autoSound *p3, int ip3,
    autoSound *v1, int iv1, autoSound *v2, int iv2, autoSound *v3, int iv3);

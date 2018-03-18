@@ -4,12 +4,12 @@
 # include ../makefile.defs
 
 OPTIONS = -I ./artsynth -I ./kar -I ./sys -I ./fon -I ./stat -I ./dwsys -I ./dwtools -I ./external/gsl -I ./LPC 
-OPTIONS += -D NOMP3=1 -D NOFLAC=1 -D NOGRAPHICS=1 
+OPTIONS += -D NOMP3=1 -D NOFLAC=1 -D NOGRAPHICS=1 -D FLOATTYPE=double
 OPTIONS += -Wlogical-op-parentheses -Wlogical-op-parentheses -Wdeprecated-register -Wshift-op-parentheses
 OPTIONS += -O3
 CFLAGS = $(OPTIONS)
 CXXFLAGS = -std=c++11 $(OPTIONS)
-LIBS=-lgsl
+LIBS=-lgsl -lsndfile
 
 OBJECTS = main_artsynth.o artsynth/Artword_Speaker_to_Sound.o artsynth/Speaker.o artsynth/Articulation.o artsynth/Artword.o \
     artsynth/Delta.o artsynth/Speaker_to_Delta.o artsynth/Art_Speaker_Delta.o artsynth/Art_Speaker.o \
